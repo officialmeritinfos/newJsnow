@@ -1,6 +1,6 @@
 @extends('user.base')
-
 @section('content')
+    @inject('injected','App\Defaults\Custom')
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -16,6 +16,7 @@
                         <th>Reference</th>
                         <th>Amount</th>
                         <th>Roi</th>
+                        <th>Service</th>
                         <th>Current profit</th>
                         <th>Date Initiated</th>
                         <th>Status</th>
@@ -28,6 +29,7 @@
                             <td>{{$investment->reference}}</td>
                             <td>{{number_format($investment->amount,2)}}</td>
                             <td>{{$investment->roi}}%</td>
+                            <td>{{$injected->fetchServiceId($investment->service)->title}}</td>
                             <td>{{$investment->currentProfit}}</td>
                             <td>{{$investment->created_at}}</td>
                             <td>

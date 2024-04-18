@@ -77,6 +77,7 @@ class Investments extends Controller
             'packages'  => $packages,
             'vipPackages'  => $vipPackages,
             'coins'=>Coin::where('status',1)->get(),
+            'service'=>$service
         ];
 
         return view('user.new_investments',$dataView);
@@ -90,7 +91,8 @@ class Investments extends Controller
             'amount'=>['required','numeric'],
             'account'=>['required','numeric'],
             'package'=>['required','numeric'],
-            'asset'=>['required','alpha_dash']
+            'asset'=>['required','string'],
+            'service'=>['required','integer']
         ]);
 
         if ($validator->fails()){
@@ -103,6 +105,12 @@ class Investments extends Controller
         $coinExists = Coin::where('asset',strtoupper($input['asset']))->first();
         if (empty($coinExists)){
             return back()->with('error','Asset is not supported');
+        }
+
+        //check if the service is supported
+        $service = Service::where('id',strtoupper($input['service']))->first();
+        if (empty($service)){
+            return back()->with('error','Service is not supported');
         }
         //generate deposit reference
         $reference = $this->generateId('deposits','reference',10);
@@ -132,7 +140,7 @@ class Investments extends Controller
                 $balance = $user->balance;
                 $source = 'balance';
                 $newBalance = [
-                    'balance'=>$balance- $input['amount']
+                    'balance'=>$balance
                 ];
                 $status=2;
                 break;
@@ -172,7 +180,7 @@ class Investments extends Controller
             'nextReturn'=>$nextReturn,'currentReturn'=>0,'returnType'=>$returnType->id,
             'numberOfReturns'=>$packageExists->numberOfReturns,'status'=>$status,'duration'=>$packageExists->Duration,
             'package'=>$packageExists->id,
-            'wallet'=>$coinExists->address,'asset'=>$coinExists->asset
+            'wallet'=>$coinExists->address,'asset'=>$coinExists->asset,'service'=>$service->id
         ];
 
         $investment = Investment::create($dataInvestment);

@@ -20,6 +20,11 @@
                             <input type="number" class="form-control form-control-lg" id="inputAddress2"
                                    placeholder="Enter Amount to Invest" name="amount">
                         </div>
+                        <div class="form-group col-md-12" style="display: none;">
+                            <label for="inputAddress2">Service</label>
+                            <input type="number" class="form-control form-control-lg" id="inputAddress2"
+                                   placeholder="Enter Amount to Invest" name="service" value="{{$service->id}}" >
+                        </div>
                         <div class="form-group col-md-12">
                             <label for="inputAddress2">Package</label>
                             <select type="number" class="form-control form-control-lg selectize" id="inputAddress2"

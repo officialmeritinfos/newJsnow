@@ -63,4 +63,9 @@ class Custom{
     {
         return Service::where('status',1)->get();
     }
+
+    public function fetchServiceId($id)
+    {
+        return Service::where('id',$id)->first();
+    }
 }

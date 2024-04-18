@@ -1,6 +1,6 @@
 @extends('user.base')
-
 @section('content')
+    @inject('injected','App\Defaults\Custom')
 
     <div class="card">
         <div class="card-body">
@@ -62,6 +62,7 @@
                                 <th scope="col">Amount</th>
                                 <th scope="col">Current Profit</th>
                                 <th scope="col">Roi</th>
+                                <th scope="col">Service</th>
                                 <th scope="col">Expected Profit</th>
                             </tr>
                             </thead>
@@ -71,6 +72,7 @@
                                 <td>${{number_format($investment->amount,2)}}</td>
                                 <td>${{number_format($investment->currentProfit,2)}}</td>
                                 <td>{{number_format($investment->roi)}}%</td>
+                                <td>{{$injected->fetchServiceId($investment->service)->title}}</td>
                                 <td>${{number_format($investment->profitPerReturn*$investment->numberOfReturns,2)}}</td>
                             </tr>
                             </tbody>
