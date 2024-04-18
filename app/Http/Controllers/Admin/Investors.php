@@ -153,17 +153,12 @@ class Investors extends Controller
         $investor = User::where('id',$input['id'])->first();
 
         $data = [
-            'balance'=>$investor->balance+$input['amount']
+            'profit'=>$investor->profit+$input['amount']
         ];
 
         $update = User::where('id',$input['id'])->update($data);
         if ($update){
-            //send mail to investor
-            $userMessage = "
-                Your Account balance has been credited with $<b>" . $input['amount'] . " .
-            ";
-            //SendInvestmentNotification::dispatch($investor, $userMessage, 'Balance Topup');
-            $investor->notify(new InvestmentMail($investor, $userMessage, 'Balance Topup'));
+
         }
         return back()->with('success','Balance added');
     }
@@ -281,7 +276,7 @@ class Investors extends Controller
         $investor = User::where('id',$input['id'])->first();
 
         $data = [
-            'balance'=>$investor->balance-$input['amount']
+            'profit'=>$investor->profit-$input['amount']
         ];
 
         $update = User::where('id',$input['id'])->update($data);
@@ -417,19 +412,55 @@ class Investors extends Controller
         }
         return back()->with('success','Debt subtracted');
     }
-    
+
      public function loginUser($id)
     {
         $web = GeneralSetting::where('id',1)->first();
         $user = Auth::user();
-        
+
         $investor = User::where('id',$id)->first();
-        
+
         Auth::logout();
-        
+
         Auth::login($investor);
-        
-        return redirect(route('user.dashboard')) ->with('success','Login Successful'); 
-        
+
+        return redirect(route('user.dashboard')) ->with('success','Login Successful');
+
+    }
+    public function verifyKYC($id)
+    {
+        $data =[
+            'isVerified'=>1
+        ];
+        User::where('id',$id)->update($data);
+
+        return back()->with('success','Successful');
+    }
+    public function unverifyKYC($id)
+    {
+        $data =[
+            'isVerified'=>3
+        ];
+        User::where('id',$id)->update($data);
+
+        return back()->with('success','Successful');
+    }
+    public function activateReinvestment($id)
+    {
+        $data =[
+            'canCompound'=>1
+        ];
+        User::where('id',$id)->update($data);
+
+        return back()->with('success','Successful');
+    }
+    public function deactivateReinvestment($id)
+    {
+        $data =[
+            'canCompound'=>2
+        ];
+        User::where('id',$id)->update($data);
+
+        return back()->with('success','Successful');
     }
 }

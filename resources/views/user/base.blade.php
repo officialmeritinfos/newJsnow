@@ -105,6 +105,13 @@
                     <span class="menu-title">Referrals </span>
                 </a>
             </li>
+
+            <li>
+                <a href="{{route('setting.kyc')}}" class="box-style">
+                    <i class="bx bxs-user-badge"></i>
+                    <span class="menu-title">KYC </span>
+                </a>
+            </li>
             @if($user->is_admin==1)
                 <li>
                     <a href="{{route('admin.admin.dashboard')}}" class="box-style">
