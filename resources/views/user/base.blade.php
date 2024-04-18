@@ -74,14 +74,14 @@
             <li>
                 <a href="{{url('account/new_investment')}}" class="box-style">
                     <i class="bx bx-chart"></i>
-                    <span class="menu-title">New Deposit</span>
+                    <span class="menu-title">New Investment</span>
                 </a>
             </li>
 
             <li>
                 <a href="{{url('account/investments')}}" class="box-style">
                     <i class="bx bx-file-blank"></i>
-                    <span class="menu-title">Deposits</span>
+                    <span class="menu-title">Investments</span>
                 </a>
             </li>
 

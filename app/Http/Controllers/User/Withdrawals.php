@@ -70,6 +70,10 @@ class Withdrawals extends Controller
             $'.number_format($user->loan,2).'. Please contact support for more details regarding this.');
         }
 
+        if ($user->isVerified!=1){
+            return back()->with('error','Your account must be verified first before you can make a withdrawal');
+        }
+
         //check if the user has the amount in balance
         switch ($input['account']){
             case 1:

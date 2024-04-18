@@ -155,12 +155,21 @@ class HomeController extends Controller
 
         $service = Service::where('id',$id)->firstOrFail();
 
-        $dataView = [
-            'siteName'  => $web->name,
-            'web'       => $web,
-            'pageName'  => $service->title,
-            'service'  => $service
-        ];
+         if($service->id==6) {
+             $packages = Package::where('service',$service->id)->where('isVip','!=',1)->get();
+             $vipPackages = Package::where('service',$service->id)->where('isVip',1)->get();
+         }else {
+             $packages = Package::where('service',null)->where('isVip','!=',1)->get();
+             $vipPackages = Package::where('service',null)->where('isVip',1)->get();
+         }
+         $dataView = [
+                 'siteName'  => $web->name,
+                 'web'       => $web,
+                 'pageName'  => $service->title,
+                 'service'  => $service,
+                 'packages'  => $packages,
+                 'vipPackages'  => $vipPackages,
+             ];
 
         return view('home.service_detail',$dataView);
     }

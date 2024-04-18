@@ -11,6 +11,7 @@ use App\Models\GeneralSetting;
 use App\Models\Investment;
 use App\Models\Package;
 use App\Models\ReturnType;
+use App\Models\Service;
 use App\Models\User;
 use App\Notifications\InvestmentMail;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class Investments extends Controller
         return view('user.investments',$dataView);
     }
 
-    public function newInvestment()
+    public function newInvestmentServices()
     {
         $web = GeneralSetting::find(1);
         $user = Auth::user();
@@ -46,8 +47,35 @@ class Investments extends Controller
             'user'=>$user,
             'pageName'=>'New Deposit',
             'siteName'=>$web->name,
-            'packages'  => Package::where('status',1)->where('isVip','!=',1)->get(),
-            'vipPackages'  => Package::where('status',1)->where('isVip',1)->get(),
+            'services'=>Service::where('status',1)->get()
+        ];
+
+        return view('user.new_investment_services',$dataView);
+    }
+
+    public function newInvestment($id)
+    {
+        $web = GeneralSetting::find(1);
+        $user = Auth::user();
+
+        $service = Service::where('id',$id)->firstOrFail();
+
+        if($service->id==6) {
+            $packages = Package::where('service',$service->id)->where('isVip','!=',1)->get();
+            $vipPackages = Package::where('service',$service->id)->where('isVip',1)->get();
+        }else {
+            $packages = Package::where('service',null)->where('isVip','!=',1)->get();
+            $vipPackages = Package::where('service',null)->where('isVip',1)->get();
+        }
+
+
+        $dataView = [
+            'web'=>$web,
+            'user'=>$user,
+            'pageName'=>'New Deposit',
+            'siteName'=>$web->name,
+            'packages'  => $packages,
+            'vipPackages'  => $vipPackages,
             'coins'=>Coin::where('status',1)->get(),
         ];
 

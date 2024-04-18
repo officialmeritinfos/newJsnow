@@ -36,7 +36,8 @@ Route::get('deposits/{id}/details',[Deposits::class,'depositDetails'])->name('de
 Route::get('deposits/{id}/cancel',[Deposits::class,'cancel'])->name('deposit.cancel');
 /*================ INVESTMENT ROUTE ====================*/
 Route::get('investments',[Investments::class,'landingPage'])->name('investment.index');
-Route::get('new_investment',[Investments::class,'newInvestment'])->name('new_investment');
+Route::get('new_investment',[Investments::class,'newInvestmentServices'])->name('new_investment');
+Route::get('new_investment/service/{id}',[Investments::class,'newInvestment'])->name('new_investment.plans');
 Route::post('process_investment',[Investments::class,'processInvestment'])->name('investment.new');
 Route::get('invst/{id}/det',[Investments::class,'investmentDetails'])->name('invest_detail');
 Route::get('investments/{id}/cancel',[Investments::class,'cancel'])->name('invest.cancel');
