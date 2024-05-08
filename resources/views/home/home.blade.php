@@ -517,7 +517,7 @@
                         </div>
 
                         <div class="text text-center">
-                            <div class="number fw-600 color-yellow"><span class="counter">47</span>k+</div>
+                            <div class="number fw-600 color-yellow"><span class="counter">47</span>K+</div>
                             <div class="description font-la">Active Users</div>
                         </div>
                     </div>
@@ -614,7 +614,7 @@
         </div>
     </section>
     <!-- our-portfolio-home end -->
-    
+
 
     <!-- testimonial start -->
 
